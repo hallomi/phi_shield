@@ -1,0 +1,29 @@
+# Ignore environment variables
+.env
+*.env
+
+# Ignore Python virtual environments
+.venv/
+venv/
+ENV/
+env/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore macOS system files
+.DS_Store
+
+# Ignore Pathway output files
+*.jsonl
+*.log
+
+# Ignore Node.js modules
+node_modules/
+
+# Ignore local data folders
+health_input/
+patient_input/
