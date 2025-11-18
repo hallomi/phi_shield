@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>EMR Compliance Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="compliance.css" />
+</head>
+
+<body>
+
+    <div class="layout">
+
+        <!-- SIDEBAR -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <span class="shield">🛡️</span>
+                <span class="brand">EMR Compliance</span>
+            </div>
+
+            <nav class="sidebar-menu">
+                <a href="compliance.html">Dashboard</a>
+                <a href="alerts.html">Alerts</a>
+                <a href="phi-access.html" id="phi-link">PHI Access Logs</a>
+                <a href="reports.html">Reports</a>
+                <a href="settings.html">Settings</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-block">
+                    <img class="avatar" src="https://i.imgur.com/80mM7Yj.png" />
+                    <div>
+                        <div class="user-name">Chris Powell</div>
+                        <div class="user-role">Compliance Officer</div>
+                    </div>
+                </div>
+                <a class="footer-link">Settings</a>
+                <a class="footer-link">Log Out</a>
+            </div>
+        </aside>
+
+        <!-- MAIN CONTENT -->
+        <main class="main">
+
+            <header class="topbar">
+                <h1>Compliance Officer Dashboard</h1>
+                <p class="subtitle">Real-time PHI access monitoring and compliance alerts.</p>
+
+                <div class="topbar-right">
+                    <input class="search" type="text" placeholder="🔍  Global Search..." />
+                    <button class="generate-btn">+ Generate Report</button>
+                </div>
+            </header>
+
+            <!-- METRICS -->
+            <section class="metrics">
+                <div class="metric">
+                    <div class="metric-title">Total Alerts Today</div>
+                    <div class="metric-value">12</div>
+                    <div class="metric-change positive">+5%</div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-title">Active Investigations</div>
+                    <div class="metric-value">4</div>
+                    <div class="metric-change negative">-2%</div>
+                </div>
+
+                <div class="metric">
+                    <div class="metric-title">Total PHI Views (24h)</div>
+                    <div class="metric-value">1,283</div>
+                    <div class="metric-change positive">+12%</div>
+                </div>
+            </section>
+
+            <!-- ALERT TABLE -->
+            <section class="alerts-section">
+                <h2>Current Alerts</h2>
+
+                <div class="alerts-table">
+
+                    <div class="row header">
+                        <div>SEVERITY</div>
+                        <div>DESCRIPTION</div>
+                        <div>USER</div>
+                        <div>TIMESTAMP</div>
+                        <div></div>
+                    </div>
+
+                    <div class="row">
+                        <div><span class="tag high">High</span></div>
+                        <div>Multiple access attempts from unrecognized IP</div>
+                        <div>Dr. Evelyn Reed</div>
+                        <div>2023-10-27 09:15 AM</div>
+                        <a class="details">View Details</a>
+                    </div>
+
+                    <div class="row">
+                        <div><span class="tag med">Medium</span></div>
+                        <div>Unusual volume of record exports</div>
+                        <div>RN. Mark Johnson</div>
+                        <div>2023-10-27 08:48 AM</div>
+                        <a class="details">View Details</a>
+                    </div>
+
+                    <div class="row">
+                        <div><span class="tag low">Low</span></div>
+                        <div>Access outside of standard operating hours</div>
+                        <div>Admin Staff #1138</div>
+                        <div>2023-10-27 02:10 AM</div>
+                        <a class="details">View Details</a>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- CHARTS -->
+            <section class="charts">
+
+                <div class="chart">
+                    <h3>PHI Access Over Time</h3>
+                    <p class="chart-sub">Past 7 days</p>
+                    <img src="https://i.imgur.com/iTrPZkM.png" class="chart-img">
+                </div>
+
+                <div class="chart">
+                    <h3>PHI Access by Department</h3>
+                    <p class="chart-sub">Current month breakdown</p>
+                    <img src="https://i.imgur.com/U3sbT4b.png" class="chart-img">
+                </div>
+
+            </section>
+
+        </main>
+    </div>
+
+    <script type="module" src="compliance.js"></script>
+</body>
+
+</html>
