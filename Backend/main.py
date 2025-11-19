@@ -7,7 +7,7 @@ import pathway as pw
 import google.generativeai as genai
 import requests
 from dotenv import load_dotenv
-#from pathway.xpacks.llm import llms
+from pathway.xpacks.llm import llms
 
 
 
