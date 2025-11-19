@@ -1,92 +1,219 @@
-import pathway as pw
 import os
-from pathway import llms
+import re
+import json
+from typing import Dict, Any, Optional
 
-from rich import console
-
-# Make sure the input directory exists
-os.makedirs("./health_input/", exist_ok=True)
-
-# ==== 1. Define schema for your new data ====
-# Two fields only: patient_id and context
-class PatientNotes(pw.Schema):
-    patient_id: str = pw.column_definition()
-    context: str = pw.column_definition()
+import pathway as pw
+import google.generativeai as genai
+import requests
+from dotenv import load_dotenv
+#from pathway.xpacks.llm import llms
 
 
-input_table = pw.io.csv.read(
-    "./health_input/",
-    schema=PatientNotes,
-    mode="streaming",
-    autocommit_duration_ms=500,  # check for changes every 500ms
+
+load_dotenv()
+
+
+
+
+PATIENTS_PATH = "patients_100.json"
+
+with open(PATIENTS_PATH, "r") as f:
+    patients_list = json.load(f)
+
+PATIENT_INDEX: Dict[str, Dict[str, Any]] = {
+    p["patient_id"]: p for p in patients_list
+}
+
+
+
+
+API_KEY = os.getenv("GEMINI_API_KEY")
+if not API_KEY:
+    raise RuntimeError("GEMINI_API_KEY is not set")
+
+genai.configure(api_key=API_KEY)
+
+
+MODEL_NAME = "models/gemini-2.5-flash"
+model = genai.GenerativeModel(MODEL_NAME)
+
+
+
+
+class QuerySchema(pw.Schema):
+    user_id: str
+    patient_id: str
+    question: str
+
+
+
+queries = pw.io.jsonlines.read(
+    "queries.jsonl",
+    schema=QuerySchema,
+    mode="streaming",  # keep watching for new queries
 )
 
-# ==== 3. (Optional) simple stats: how many notes so far ====
-stats_table = input_table.reduce(
-    total_notes=pw.reducers.count(),
+
+
+
+def answer_patient_query(user_id: str, patient_id: str, question: str) -> str:
+    """
+    - Look up patient record by patient_id from PATIENT_INDEX
+    - (Currently) no access control: respond regardless of user_id
+    - Send patient context + question to Gemini
+    - Return answer text
+    """
+    patient = PATIENT_INDEX.get(patient_id)
+    if patient is None:
+        return f"No patient found for patient_id={patient_id}"
+
+    
+    patient_json = json.dumps(patient, separators=(",", ":"))
+
+    prompt = f"""
+You are a clinical assistant. You will be given structured patient data in JSON
+and a clinician's question. Use ONLY the provided data. If something is not in
+the data, say you don't know.
+
+PATIENT_DATA (JSON):
+{patient_json}
+
+QUESTION:
+{question}
+
+Respond in 3-5 sentences, clear and concise, using clinical but simple language.
+"""
+
+    try:
+        resp = model.generate_content(prompt)
+        text = getattr(resp, "text", None)
+        if not text:
+            return "LLM returned an empty response."
+        return text.strip()
+    except Exception as e:
+        
+        return f"Error calling LLM: {e}"
+
+
+
+
+UPDATE_KEYWORDS = ("update", "change", "set")
+
+
+def detect_age_update(question: str) -> Optional[int]:
+    """
+    Very simple heuristic:
+    - If the question contains one of ['update','change','set']
+      AND the word 'age'
+      AND a number -> treat that number as the new age.
+    - Otherwise return None.
+    """
+    q_lower = question.lower()
+
+    if "age" not in q_lower:
+        return None
+
+    if not any(kw in q_lower for kw in UPDATE_KEYWORDS):
+        return None
+
+    
+    match = re.search(r"\b(\d{1,3})\b", q_lower)
+    if not match:
+        return None
+
+    try:
+        age_val = int(match.group(1))
+    except ValueError:
+        return None
+
+    
+    if age_val <= 0 or age_val > 120:
+        return None
+
+    return age_val
+
+
+
+
+answers = queries.select(
+    user_id=pw.this.user_id,
+    patient_id=pw.this.patient_id,
+    question=pw.this.question,
+    answer=pw.apply(
+        answer_patient_query,
+        pw.this.user_id,
+        pw.this.patient_id,
+        pw.this.question,
+    ),
 )
 
-# ==== 4. Just echo each new note as it arrives ====
-notes_table = input_table.select(
-    pw.this.patient_id,
-    pw.this.context,
+
+
+updates_raw = queries.select(
+    user_id=pw.this.user_id,
+    patient_id=pw.this.patient_id,
+    question=pw.this.question,
+    new_age=pw.apply(detect_age_update, pw.this.question),
 )
 
-# ==== 5. Write stream to a JSONL file for inspection ====
-pw.io.jsonlines.write(notes_table, "patient_notes_stream.jsonl")
 
-# ==== 6. Callbacks to print updates in real time ====
-def on_stats_update(key, row, time, is_addition):
-    print("hey what is happening")
-    if is_addition:
-        print("\n" + "="*60)
-        print("📊 PATIENT NOTES STATS UPDATED")
-        print("="*60)
-        print(f"Total notes ingested so far: {row['total_notes']}")
-        print("="*60 + "\n")
+updates = updates_raw.filter(pw.this.new_age.is_not_none())
 
-def on_note_update(key, row, time, is_addition):
-    if is_addition:
-        print("\n🆕 New patient note received:")
-        print(f"  👤 Patient ID: {row['patient_id']}")
-        print(f"  📝 Context   : {row['context']}\n")
 
-# Subscribe to live updates
-pw.io.subscribe(stats_table, on_stats_update)
-pw.io.subscribe(notes_table, on_note_update)
+pw.io.jsonlines.write(
+    updates,
+    "patient_updates.jsonl",
+)
 
-# ==== 7. Helper: show instructions ====
-def print_instructions():
-    print("\n" + "="*70)
-    print("🏥 REAL-TIME PATIENT NOTES STREAM (Pathway)")
-    print("="*70)
-    print("\nWatching directory: ./health_input/")
-    print("Any *.csv file here will be ingested in STREAMING mode.\n")
-    print("CSV header (MUST be first line):")
-    print("patient_id,context")
-    print("\nExample row:")
-    print('12345,"Patient reports mild chest pain for 2 days, no fever."\n')
-    print("You can:")
-    print("  • Append new rows to an existing CSV file (e.g., notes.csv)")
-    print("  • OR create new CSV files (notes2.csv, notes3.csv, ...)")
-    print("\nPathway will detect BOTH new files and new rows.")
-    print("="*70 + "\n")
 
-    # Create a starter CSV if none exists
-    csv_path = "./health_input/patient_notes.csv"
-    if not os.path.exists(csv_path):
-        with open(csv_path, "w") as f:
-            f.write("patient_id,context\n")
-        print(f"✓ Created starter file: {csv_path}")
-        print('  You can now append rows like:')
-        print('  echo \'12345,"First visit, general checkup"\' >> health_input/patient_notes.csv\n')
 
-# ==== 8. Run ====
-print_instructions()
 
-try:
-    pw.run()
-except KeyboardInterrupt:
-    print("\n\n✓ Streaming stopped by user.")
-except Exception as e:
-    print(f"\n\n❌ Error: {e}")
+pw.io.jsonlines.write(
+    answers,
+    "answers.jsonl",
+)
+
+
+
+WEBHOOK_URL = "https://www.dtc-aparavi.com/webhook"
+
+
+def send_answer_to_webhook(
+    key: pw.Pointer,
+    row: dict,
+    time: int,
+    is_addition: bool,
+):
+    """
+    Called by Pathway every time 'answers' table changes.
+    We only care about new rows (is_addition == True).
+    """
+    if not is_addition:
+        return
+
+    payload = {
+        "user_id": row.get("user_id"),
+        "patient_id": row.get("patient_id"),
+        "question": row.get("question"),
+        "answer": row.get("answer"),
+    }
+
+    try:
+        resp = requests.post(WEBHOOK_URL, json=payload, timeout=5)
+        print(
+            f"[WEBHOOK] Sent to {WEBHOOK_URL} status={resp.status_code}",
+            flush=True,
+        )
+    except Exception as e:
+        print(f"[WEBHOOK ERROR] {e}", flush=True)
+
+
+pw.io.subscribe(
+    answers,
+    on_change=send_answer_to_webhook,
+)
+
+
+
+pw.run()
