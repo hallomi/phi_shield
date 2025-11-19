@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>EMR ClinicalSuite - Patient Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="chatbot.css">
+</head>
+
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="top-nav">
+    <div class="nav-left">
+      <div class="logo"></div>
+      <h1>EMR ClinicalSuite</h1>
+    </div>
+
+    <div class="search-bar">
+      <input type="text" placeholder="Search Patients">
+    </div>
+
+    <div class="nav-icons">
+      <div class="icon bell"></div>
+      <div class="icon settings"></div>
+      <img class="profile" src="https://randomuser.me/api/portraits/women/44.jpg" />
+    </div>
+  </header>
+
+  <div class="layout">
+
+    <!-- LEFT PANEL -->
+    <div class="left-panel">
+
+      <!-- Patient Card -->
+      <div class="patient-card">
+        <img class="patient-photo" src="https://randomuser.me/api/portraits/women/45.jpg">
+        <div>
+          <h2>Jane Doe, 45</h2>
+          <p class="mrn">MRN: 123456789</p>
+          <div class="badges">
+            <span class="badge red">DNR</span>
+            <span class="badge yellow">Fall Risk</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs -->
+      <nav class="tabs">
+        <a>Overview</a>
+        <a class="active">Vitals</a>
+        <a>Medications</a>
+        <a>Test Results</a>
+        <a>Allergies</a>
+        <a>Notes</a>
+      </nav>
+
+      <!-- Vitals -->
+      <section class="vitals-section">
+        <h3>Vitals</h3>
+
+        <div class="vital-grid">
+          <div class="vital-card">
+            <p class="label">Blood Pressure</p>
+            <p class="value">120/80 mmHg</p>
+            <p class="trend green">Last 24h +2%</p>
+            <img class="sparkline" src="https://svgshare.com/i/14qF.svg" />
+          </div>
+
+          <div class="vital-card">
+            <p class="label">Heart Rate</p>
+            <p class="value">72 bpm</p>
+            <p class="trend red">Last 24h -1%</p>
+            <img class="sparkline" src="https://svgshare.com/i/14qF.svg" />
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- RIGHT PANEL — Chatbot -->
+    <aside class="chat-panel">
+
+      <h3 class="assistant-title">Clinical Assistant</h3>
+      <p class="assistant-sub">Discussing: Jane Doe</p>
+
+      <div id="chat-window" class="chat-window"></div>
+
+      <div class="quick-actions">
+        <button class="quick-btn">Summarize recent notes</button>
+        <button class="quick-btn">List active medications</button>
+      </div>
+
+      <form id="chat-form" class="chat-input-area">
+        <input id="chat-input" type="text" placeholder="Type your message..." required>
+        <button type="submit" class="send-btn">➤</button>
+      </form>
+
+    </aside>
+
+  </div>
+
+  <script type="module" src="chatbot.js"></script>
+</body>
+</html>
+

@@ -27,3 +27,11 @@ node_modules/
 # Ignore local data folders
 health_input/
 patient_input/
+
+# Ignore node modules
+node_modules/
+
+# Ignore TypeScript build outputs
+*.js.map
+*.d.ts
+*.d.ts.map
