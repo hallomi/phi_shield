@@ -4,6 +4,10 @@ body {
   background: #f5f6fa;
   font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont;
   color: #1f2937;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* Center container */
@@ -11,7 +15,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 80px;
+  width: 100%;
 }
 
 /* Brand logo + text */
@@ -105,6 +109,38 @@ input:focus {
 
 .login-btn:hover {
   background: #1d4ed8;
+}
+
+/* Action buttons */
+.action-buttons {
+  margin-top: 24px;
+  width: 100%;
+}
+
+.compliance-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 12px 0;
+  background: #9333ea;
+  color: white;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.compliance-btn:hover {
+  background: #7e22ce;
+}
+
+.compliance-btn .btn-icon {
+  font-size: 1.1rem;
 }
 
 /* Forgot password link */

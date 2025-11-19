@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Access Policy Management - phiShield</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="access-policy.css" />
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="shield-icon">🛡️</div>
+      <span class="brand">phiShield</span>
+    </div>
+
+    <div class="user-profile">
+      <div class="avatar">🔍</div>
+      <div class="user-info">
+        <div class="user-name">Chris Powell</div>
+        <div class="user-role">Compliance Officer</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-menu">
+      <a href="compliance.html">
+        <span class="menu-icon">📊</span>
+        <span>Dashboard</span>
+      </a>
+      <a href="phi-access.html">
+        <span class="menu-icon">📄</span>
+        <span>PHI Access Logs</span>
+      </a>
+      <a class="active" href="access-policy.html">
+        <span class="menu-icon">🔐</span>
+        <span>Access Policy Management</span>
+      </a>
+      <div class="menu-divider"></div>
+      <a href="settings.html">
+        <span class="menu-icon">⚙️</span>
+        <span>Settings</span>
+      </a>
+      <a href="index.html">
+        <span class="menu-icon">🚪</span>
+        <span>Log Out</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+    <header class="topbar">
+      <div class="header-left">
+        <h1>Access Policy Management</h1>
+        <p class="subtitle">Manage user roles, permissions, and access policies.</p>
+      </div>
+      <button class="add-policy-btn">
+        <span class="btn-icon">+</span>
+        <span>Add New Policy</span>
+      </button>
+    </header>
+
+    <!-- POLICY TABLE -->
+    <section class="policy-table-section">
+      <div class="policy-table">
+        <div class="row header">
+          <div>ROLE</div>
+          <div>PERMISSIONS</div>
+          <div>LAST UPDATED</div>
+          <div>ACTIONS</div>
+        </div>
+
+        <div class="row">
+          <div class="role-name">Physician</div>
+          <div class="permissions">
+            <span class="permission-tag">View Patient Records</span>
+            <span class="permission-tag">Edit Patient Records</span>
+            <span class="permission-tag">Prescribe Medication</span>
+          </div>
+          <div class="last-updated">2023-10-15</div>
+          <div class="actions">
+            <button class="action-btn edit">Edit</button>
+            <button class="action-btn delete">Delete</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="role-name">Nurse</div>
+          <div class="permissions">
+            <span class="permission-tag">View Patient Records</span>
+            <span class="permission-tag">Update Vitals</span>
+          </div>
+          <div class="last-updated">2023-09-28</div>
+          <div class="actions">
+            <button class="action-btn edit">Edit</button>
+            <button class="action-btn delete">Delete</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="role-name">Admin Staff</div>
+          <div class="permissions">
+            <span class="permission-tag">View Patient Demographics</span>
+            <span class="permission-tag">Schedule Appointments</span>
+          </div>
+          <div class="last-updated">2023-10-02</div>
+          <div class="actions">
+            <button class="action-btn edit">Edit</button>
+            <button class="action-btn delete">Delete</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="role-name">Researcher</div>
+          <div class="permissions">
+            <span class="permission-tag">View Anonymized Data</span>
+          </div>
+          <div class="last-updated">2023-08-11</div>
+          <div class="actions">
+            <button class="action-btn edit">Edit</button>
+            <button class="action-btn delete">Delete</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="role-name">Billing Department</div>
+          <div class="permissions">
+            <span class="permission-tag">View Billing Information</span>
+            <span class="permission-tag">Process Payments</span>
+          </div>
+          <div class="last-updated">2023-10-20</div>
+          <div class="actions">
+            <button class="action-btn edit">Edit</button>
+            <button class="action-btn delete">Delete</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Floating Action Button -->
+<div class="fab">
+  <span class="fab-icon">🤖</span>
+</div>
+
+<script type="module" src="access-policy.js"></script>
+
+</body>
+</html>
+

@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>PHI Access Logs</title>
+  <title>PHI Access Logs - phiShield</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="phi-access.css" />
 </head>
-
 <body>
 
 <div class="layout">
@@ -14,177 +13,129 @@
   <!-- SIDEBAR -->
   <aside class="sidebar">
     <div class="sidebar-header">
-      <span class="shield">🛡️</span>
-      <span class="brand">EMR Compliance</span>
+      <div class="shield-icon">🛡️</div>
+      <span class="brand">phiShield</span>
+    </div>
+
+    <div class="user-profile">
+      <div class="avatar">🔍</div>
+      <div class="user-info">
+        <div class="user-name">Chris Powell</div>
+        <div class="user-role">Compliance Officer</div>
+      </div>
     </div>
 
     <nav class="sidebar-menu">
-      <a href="compliance.html">Dashboard</a>
-      <a href="alerts.html">Alerts</a>
-      <a class="active" href="phi-access.html">PHI Access Logs</a>
-      <a href="reports.html">Reports</a>
-      <a href="settings.html">Settings</a>
+      <a href="compliance.html">
+        <span class="menu-icon">📊</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="active" href="phi-access.html">
+        <span class="menu-icon">📄</span>
+        <span>PHI Access Logs</span>
+      </a>
+      <a href="access-policy.html">
+        <span class="menu-icon">🔐</span>
+        <span>Access Policy Management</span>
+      </a>
+      <div class="menu-divider"></div>
+      <a href="settings.html">
+        <span class="menu-icon">⚙️</span>
+        <span>Settings</span>
+      </a>
+      <a href="index.html">
+        <span class="menu-icon">🚪</span>
+        <span>Log Out</span>
+      </a>
     </nav>
-
-    <div class="sidebar-footer">
-      <div class="user-block">
-        <img class="avatar" src="https://i.imgur.com/80mM7Yj.png" />
-        <div>
-          <div class="user-name">Dr. Evelyn Reed</div>
-          <div class="user-role">Administrator</div>
-        </div>
-      </div>
-
-      <a class="footer-link">Help Center</a>
-      <a class="footer-link">Logout</a>
-    </div>
   </aside>
 
   <!-- MAIN CONTENT -->
   <main class="main">
-
     <header class="topbar">
-      <h1>PHI Data Access Logs</h1>
+      <div class="header-left">
+        <h1>PHI Access Logs</h1>
+        <p class="subtitle">Detailed record of access to Protected Health Information.</p>
+      </div>
+      <button class="export-btn">
+        <span class="btn-icon">⬇</span>
+        <span>Export Logs</span>
+      </button>
     </header>
 
-    <div class="content-grid">
-
-      <!-- FILTERS PANEL -->
-      <section class="filters">
-        <input class="search" type="text" placeholder="Search by query, PHI data..." />
-
-        <div class="calendar-block">
-          <h3>Date Range</h3>
-
-          <div class="calendar-header">
-            <span>&lt;</span>
-            <h4>October 2023</h4>
-            <span>&gt;</span>
+    <!-- ACCESS EVENTS SECTION -->
+    <section class="access-events-section">
+      <div class="section-header">
+        <h2>Access Events</h2>
+        <div class="search-filter-bar">
+          <div class="search-wrapper">
+            <span class="search-icon">🔍</span>
+            <input class="search-input" type="text" placeholder="Search logs..." />
           </div>
-
-          <div class="calendar">
-            <div class="day">S</div><div class="day">M</div><div class="day">T</div><div class="day">W</div><div class="day">T</div><div class="day">F</div><div class="day">S</div>
-
-            <div class="date empty"></div>
-            <div class="date empty"></div>
-            <div class="date">1</div>
-            <div class="date">2</div>
-            <div class="date">3</div>
-            <div class="date">4</div>
-
-            <div class="date selected">5</div>
-            <div class="date">6</div>
-            <div class="date">7</div>
-            <div class="date">8</div>
-            <div class="date selected">9</div>
-            <div class="date">10</div>
-            <div class="date">11</div>
-
-            <div class="date">12</div>
-            <div class="date">13</div>
-            <div class="date">14</div>
-            <div class="date">15</div>
-            <div class="date">16</div>
-            <div class="date">17</div>
-            <div class="date">18</div>
-
-            <div class="date">19</div>
-            <div class="date">20</div>
-            <div class="date">21</div>
-            <div class="date">22</div>
-            <div class="date">23</div>
-            <div class="date">24</div>
-            <div class="date">25</div>
-
-            <div class="date">26</div>
-            <div class="date">27</div>
-            <div class="date">28</div>
-            <div class="date">29</div>
-            <div class="date">30</div>
-            <div class="date">31</div>
-          </div>
+          <button class="filter-btn">
+            <span class="filter-icon">🔽</span>
+            <span>Filter</span>
+          </button>
         </div>
+      </div>
 
-        <label class="filter-block">
-          <span>User</span>
-          <select>
-            <option>All Users</option>
-            <option>Dr. Alice Smith</option>
-            <option>Dr. Bob Johnson</option>
-            <option>Nurse Carol White</option>
-          </select>
-        </label>
-
-        <label class="filter-block">
-          <span>Severity of Risk</span>
-          <select>
-            <option>All Levels</option>
-            <option>High</option>
-            <option>Medium</option>
-            <option>Low</option>
-          </select>
-        </label>
-      </section>
-
-      <!-- TABLE OF logs -->
-      <section class="logs-table">
+      <div class="logs-table">
         <div class="row header">
           <div>TIMESTAMP</div>
           <div>USER</div>
           <div>PATIENT ID</div>
-          <div>PHI DATA ACCESSED</div>
+          <div>RISK</div>
+          <div>DETAILS</div>
         </div>
 
-        <div class="row">
+        <div class="row clickable" data-log-id="1">
           <div>2023-10-27 14:32:05</div>
-          <div>Dr. Alice Smith</div>
-          <div>MRN-987654</div>
-          <div>Billing Info</div>
+          <div>Dr. Sarah Chen</div>
+          <div>PID-00123</div>
+          <div><span class="risk-badge moderate">Moderate</span></div>
+          <div>Viewed patient summary</div>
         </div>
 
-        <div class="row">
-          <div>2023-10-27 14:28:11</div>
-          <div>Dr. Bob Johnson</div>
-          <div>MRN-123456</div>
-          <div>Lab Results</div>
+        <div class="row clickable" data-log-id="2">
+          <div>2023-10-27 14:30:18</div>
+          <div>RN. Michael Brown</div>
+          <div>PID-00456</div>
+          <div><span class="risk-badge safe">Safe</span></div>
+          <div>Updated medication list</div>
         </div>
 
-        <div class="row">
-          <div>2023-10-27 13:55:43</div>
-          <div>Nurse Carol White</div>
-          <div>MRN-789012</div>
-          <div>Demographics</div>
+        <div class="row clickable" data-log-id="3">
+          <div>2023-10-27 14:25:44</div>
+          <div>Dr. Evelyn Reed</div>
+          <div>PID-00789</div>
+          <div><span class="risk-badge severe">Severe</span></div>
+          <div>Exported lab results to PDF</div>
         </div>
 
-        <div class="row">
-          <div>2023-10-27 13:40:19</div>
-          <div>Dr. Alice Smith</div>
-          <div>MRN-654321</div>
-          <div>Prescriptions</div>
+        <div class="row clickable" data-log-id="4">
+          <div>2023-10-27 14:22:10</div>
+          <div>Admin Staff #1138</div>
+          <div>PID-00123</div>
+          <div><span class="risk-badge not-sure">Not Sure</span></div>
+          <div>Accessed billing information</div>
         </div>
 
-        <div class="row">
-          <div>2023-10-27 12:15:01</div>
-          <div>Admin System</div>
-          <div>N/A</div>
-          <div>Allergy List</div>
+        <div class="row clickable" data-log-id="5">
+          <div>2023-10-27 14:20:01</div>
+          <div>Dr. Sarah Chen</div>
+          <div>PID-00123</div>
+          <div><span class="risk-badge safe">Safe</span></div>
+          <div>Deleted duplicate entry in notes</div>
         </div>
+      </div>
+    </section>
 
-        <div class="row">
-          <div>2023-10-27 11:05:22</div>
-          <div>Dr. Bob Johnson</div>
-          <div>MRN-112233</div>
-          <div>Clinical Notes</div>
-        </div>
-
-        <div class="footer">
-          Showing 1–6 of 1000
-        </div>
-
-      </section>
-
-    </div>
   </main>
+</div>
+
+<!-- Floating Action Button -->
+<div class="fab">
+  <span class="fab-icon">🤖</span>
 </div>
 
 <script type="module" src="phi-access.js"></script>

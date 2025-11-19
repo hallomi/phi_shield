@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PHI Access Log Details - phiShield</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="log-details.css" />
+</head>
+<body>
+
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="shield-icon">🛡️</div>
+      <span class="brand">phiShield</span>
+    </div>
+
+    <div class="user-profile">
+      <div class="avatar">🔍</div>
+      <div class="user-info">
+        <div class="user-name">Chris Powell</div>
+        <div class="user-role">Compliance Officer</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-menu">
+      <a href="compliance.html">
+        <span class="menu-icon">📊</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="active" href="phi-access.html">
+        <span class="menu-icon">📄</span>
+        <span>PHI Access Logs</span>
+      </a>
+      <a href="access-policy.html">
+        <span class="menu-icon">🔐</span>
+        <span>Access Policy Management</span>
+      </a>
+      <div class="menu-divider"></div>
+      <a href="settings.html">
+        <span class="menu-icon">⚙️</span>
+        <span>Settings</span>
+      </a>
+      <a href="#" id="logout-link">
+        <span class="menu-icon">🚪</span>
+        <span>Log Out</span>
+      </a>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+    <header class="topbar">
+      <div class="header-left">
+        <h1>PHI Access Log Details</h1>
+        <p class="subtitle">Detailed view of a single PHI access log entry.</p>
+      </div>
+      <div class="header-actions">
+        <button class="action-btn update-btn">
+          <span class="btn-icon">✏️</span>
+          <span>Update</span>
+        </button>
+        <button class="action-btn export-btn">
+          <span class="btn-icon">⬇</span>
+          <span>Export</span>
+        </button>
+        <button class="close-btn" onclick="window.history.back()">
+          <span>✕</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- LOG DETAILS SECTION -->
+    <section class="log-details-section">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <label>Timestamp</label>
+          <div class="detail-value">2023-10-27 14:32:05</div>
+        </div>
+
+        <div class="detail-item">
+          <label>User</label>
+          <div class="detail-value">Dr. Sarah Chen</div>
+        </div>
+
+        <div class="detail-item">
+          <label>Patient ID</label>
+          <div class="detail-value">PID-00123</div>
+        </div>
+
+        <div class="detail-item">
+          <label>Risk Severity</label>
+          <div class="detail-value">
+            <span class="risk-badge moderate">
+              <span class="risk-icon">⚠️</span>
+              Moderate
+            </span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <label>PHI Tags</label>
+          <div class="phi-tags">
+            <span class="phi-tag">Medication History</span>
+            <span class="phi-tag">Diagnosis</span>
+            <span class="phi-tag">Lab Results</span>
+          </div>
+        </div>
+
+        <div class="detail-item">
+          <label>Assigned Officer</label>
+          <div class="detail-value">
+            <select class="officer-select">
+              <option>Chris Powell</option>
+              <option>Amanda Wells</option>
+              <option>John Smith</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- LLM Response Section -->
+      <div class="llm-section">
+        <h3>Details (LLM Response)</h3>
+        <div class="llm-content">
+          <div class="query-section">
+            <strong>User query:</strong>
+            <p class="query-text">Summarize patient PID-00123's recent visits and current medication.</p>
+          </div>
+          <div class="response-section">
+            <strong>LLM Response:</strong>
+            <div class="response-text">
+              <p><strong>Patient ID and Name:</strong> PID-00123, John Doe</p>
+              <p><strong>Presentation:</strong> Patient presented on 2023-10-15 with symptoms of hypertension.</p>
+              <p><strong>Vitals:</strong> BP 145/95 mmHg, HR 88 bpm.</p>
+              <p><strong>Prescribed Medication:</strong> Lisinopril 10mg once daily.</p>
+              <p><strong>Follow-up:</strong> Follow-up on 2023-10-25 showed BP at 130/85 mmHg.</p>
+              <p><strong>Current Medications:</strong></p>
+              <ul>
+                <li>Lisinopril 10mg OD</li>
+                <li>Metformin 500mg BID</li>
+                <li>Atorvastatin 20mg OD</li>
+              </ul>
+              <p><strong>Lab Results:</strong> Lab results from 2023-10-15 indicate elevated LDL cholesterol at 160 mg/dL.</p>
+              <p><strong>Allergies:</strong> No known drug allergies.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMPLIANCE COMMENTS SECTION -->
+    <section class="comments-section">
+      <div class="section-header">
+        <div>
+          <h2>Compliance Comments</h2>
+          <p class="section-subtitle">Internal discussion about this log entry.</p>
+        </div>
+      </div>
+
+      <div class="comments-list">
+        <div class="comment-item">
+          <div class="comment-avatar">🔍</div>
+          <div class="comment-content">
+            <div class="comment-header">
+              <span class="comment-author">Chris Powell</span>
+              <span class="comment-time">2023-10-27 15:10:12</span>
+            </div>
+            <div class="comment-text">
+              This access seems justified given the user's role as the primary care physician for this patient. The LLM response is concise and relevant. Marking as reviewed, no further action required.
+            </div>
+          </div>
+        </div>
+
+        <div class="comment-item">
+          <div class="comment-avatar">A</div>
+          <div class="comment-content">
+            <div class="comment-header">
+              <span class="comment-author">Amanda Wells</span>
+              <span class="comment-time">2023-10-27 15:15:45</span>
+            </div>
+            <div class="comment-text">
+              Agreed. The PHI tags are accurate as well. Closing this out.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="comment-input-area">
+        <textarea class="comment-input" placeholder="Write a comment..."></textarea>
+        <div class="comment-actions">
+          <button class="post-btn">
+            <span class="btn-icon">✈️</span>
+            <span>Post Comment</span>
+          </button>
+          <button class="clipboard-btn">
+            <span class="btn-icon">📋</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script type="module" src="log-details.js"></script>
+
+</body>
+</html>
+

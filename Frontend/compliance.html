@@ -3,9 +3,10 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>EMR Compliance Dashboard</title>
+    <title>phiShield - Compliance Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="compliance.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 
 <body>
@@ -15,40 +16,53 @@
         <!-- SIDEBAR -->
         <aside class="sidebar">
             <div class="sidebar-header">
-                <span class="shield">🛡️</span>
-                <span class="brand">EMR Compliance</span>
+                <div class="shield-icon">🛡️</div>
+                <span class="brand">phiShield</span>
+            </div>
+
+            <div class="user-profile">
+                <div class="avatar">🔍</div>
+                <div class="user-info">
+                    <div class="user-name">Chris Powell</div>
+                    <div class="user-role">Compliance Officer</div>
+                </div>
             </div>
 
             <nav class="sidebar-menu">
-                <a href="compliance.html">Dashboard</a>
-                <a href="alerts.html">Alerts</a>
-                <a href="phi-access.html" id="phi-link">PHI Access Logs</a>
-                <a href="reports.html">Reports</a>
-                <a href="settings.html">Settings</a>
+                <a class="active" href="compliance.html">
+                    <span class="menu-icon">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="phi-access.html">
+                    <span class="menu-icon">📄</span>
+                    <span>PHI Access Logs</span>
+                </a>
+                <a href="access-policy.html">
+                    <span class="menu-icon">🔐</span>
+                    <span>Access Policy Management</span>
+                </a>
+                <div class="menu-divider"></div>
+                <a href="settings.html">
+                    <span class="menu-icon">⚙️</span>
+                    <span>Settings</span>
+                </a>
+                <a href="#" id="logout-link">
+                    <span class="menu-icon">🚪</span>
+                    <span>Log Out</span>
+                </a>
             </nav>
-
-            <div class="sidebar-footer">
-                <div class="user-block">
-                    <img class="avatar" src="https://i.imgur.com/80mM7Yj.png" />
-                    <div>
-                        <div class="user-name">Chris Powell</div>
-                        <div class="user-role">Compliance Officer</div>
-                    </div>
-                </div>
-                <a class="footer-link">Settings</a>
-                <a class="footer-link">Log Out</a>
-            </div>
         </aside>
 
         <!-- MAIN CONTENT -->
         <main class="main">
 
             <header class="topbar">
-                <h1>Compliance Officer Dashboard</h1>
-                <p class="subtitle">Real-time PHI access monitoring and compliance alerts.</p>
-
+                <div class="header-left">
+                    <h1>Compliance Dashboard</h1>
+                    <p class="subtitle">Real-time PHI access monitoring and compliance alerts.</p>
+                </div>
                 <div class="topbar-right">
-                    <input class="search" type="text" placeholder="🔍  Global Search..." />
+                    <input class="search" type="text" placeholder="Global Search..." />
                     <button class="generate-btn">+ Generate Report</button>
                 </div>
             </header>
@@ -76,7 +90,10 @@
 
             <!-- ALERT TABLE -->
             <section class="alerts-section">
-                <h2>Current Alerts</h2>
+                <div class="section-header">
+                    <h2>Current Alerts</h2>
+                    <a href="#" class="view-all-link">View All Alerts</a>
+                </div>
 
                 <div class="alerts-table">
 
@@ -121,18 +138,23 @@
                 <div class="chart">
                     <h3>PHI Access Over Time</h3>
                     <p class="chart-sub">Past 7 days</p>
-                    <img src="https://i.imgur.com/iTrPZkM.png" class="chart-img">
+                    <canvas id="phiAccessOverTimeChart"></canvas>
                 </div>
 
                 <div class="chart">
-                    <h3>PHI Access by Department</h3>
+                    <h3>PHI Access by User</h3>
                     <p class="chart-sub">Current month breakdown</p>
-                    <img src="https://i.imgur.com/U3sbT4b.png" class="chart-img">
+                    <canvas id="phiAccessByUserChart"></canvas>
                 </div>
 
             </section>
 
         </main>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="fab">
+        <span class="fab-icon">🖥️</span>
     </div>
 
     <script type="module" src="compliance.js"></script>

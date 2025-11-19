@@ -10,6 +10,7 @@ type LoginResult = {
 const loginForm = document.getElementById("login-form") as HTMLFormElement | null;
 const usernameInput = document.getElementById("username") as HTMLInputElement | null;
 const passwordInput = document.getElementById("password") as HTMLInputElement | null;
+const complianceBtn = document.querySelector(".compliance-btn") as HTMLAnchorElement;
 
 if (!loginForm || !usernameInput || !passwordInput) {
   console.error("Login form elements missing from DOM.");
@@ -29,11 +30,27 @@ if (!loginForm || !usernameInput || !passwordInput) {
       return;
     }
 
-    // OPTIONAL strict mock credentials:
-    // if (username !== "dr.emily" || password !== "test123") {
-    //   alert("Invalid credentials.");
-    //   return;
-    // }
+    // ──────────────────────────────
+    // Validate credentials
+    // ──────────────────────────────
+    if (password !== "123") {
+      alert("Invalid password. Password should be 123.");
+      return;
+    }
+
+    // ──────────────────────────────
+    // Route based on username
+    // ──────────────────────────────
+    let redirectUrl: string;
+    
+    if (username === "doctorJane@doctor.com") {
+      redirectUrl = "chatbot.html";
+    } else if (username === "complianceDave@compliance.com") {
+      redirectUrl = "compliance.html";
+    } else {
+      alert("Invalid username. Use doctorJane@doctor.com or complianceDave@compliance.com");
+      return;
+    }
 
     // ──────────────────────────────
     // MOCK login success
@@ -47,7 +64,24 @@ if (!loginForm || !usernameInput || !passwordInput) {
     // store session in localStorage
     localStorage.setItem("mockSession", JSON.stringify(mockSession));
 
-    // Redirect user to chatbot dashboard
-    window.location.href = "chatbot.html";
+    // Redirect user based on username
+    window.location.href = redirectUrl;
   });
 }
+
+// Handle compliance tools button click
+complianceBtn?.addEventListener("click", (e) => {
+  e.preventDefault();
+  
+  // Set a mock session for quick access
+  const mockSession = {
+    username: "guest",
+    loggedIn: true,
+    timestamp: Date.now(),
+  };
+  
+  localStorage.setItem("mockSession", JSON.stringify(mockSession));
+  
+  // Redirect to compliance dashboard
+  window.location.href = "compliance.html";
+});

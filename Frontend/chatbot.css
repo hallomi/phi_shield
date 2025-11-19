@@ -157,6 +157,12 @@ body {
   width: 100%;
 }
 
+.vital-chart-container {
+  margin-top: 14px;
+  height: 150px;
+  width: 100%;
+}
+
 /* CHAT PANEL */
 .chat-panel {
   width: 35%;
